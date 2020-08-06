@@ -1,0 +1,3 @@
+[submodule "fmriprep_denoising"]
+	path = fmriprep_denoising
+	url = https://github.com/sjburwell/fmriprep_denoising.git
