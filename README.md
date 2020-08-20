@@ -22,10 +22,10 @@ While there are other MATLAB dependencies (e.g., SPM12), you should be able to o
 help get_fc
 ```
 
-Here, I will show an example using  
+Here, I will show an example using data that were structured in [BIDS format](https://bids.neuroimaging.io/), preprocessed using [fmriprep](https://fmriprep.org/en/stable/), and denoised using [denoise_fmriprep_output](https://github.com/sjburwell/fmriprep_denoising/blob/master/denoise_fmriprep_output.py) -- saved into a directory "tmpdir".
 
 ```matlab
-filefilter =['/home/burwell/tempdelete/fmriprep_denoising/tmpdir/*03P+AROMANonAgg_ROI-Schaefer400+HarvOxSubCortRL*'];
+filefilter = '/home/burwell/tempdelete/fmriprep_denoising/tmpdir/*03P+AROMANonAgg_ROI-Schaefer400+HarvOxSubCortRL*';
 opts.lpf       =                                          .1; % lowpass filter cutoff, in Hz (0 if none)
 opts.tr_ntr    =                                [1.395  420 ; % Nx2 array of [TR, #TRs; ...] 
                                                  1.500  400]; % Important for inferring sample-rate if lpf>0 or hpf>0
@@ -36,9 +36,10 @@ opts.datakeys  = {'ManufacturersModelName',{'TrioTim','Prisma_fit'};
 outfc_matroot  = get_fc(filefilter,opts);
 ```
 
-
-
-
-
-
+# Output:
+The above code will generate a tab-separated file with the extension .dat that contains one row per each subject and region of interest, and the following columns:
+* _ID_: a subject identifier corresponding to the ??????? in sub-???????
+* _ROI_: identifier for each region of interest (ROI)
+* _{datakeys}_: above, the data keys will be named 'ManufacturersModelName' and 'SoftwareVersions,' in that order.
+* _ROI**_: here, columns also identify regions of interest (ROIs), where ** is some integer between 1 and R.
 
