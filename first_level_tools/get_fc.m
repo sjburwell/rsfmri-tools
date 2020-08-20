@@ -1,8 +1,40 @@
 function outname_final = get_fc(loadfilter,opts);
-% outname_final = get_fc(loadfilter,opts);
+% get_fc() - generates a table of functional connectivity data gleaned from TSV files containing
+%            denoised fMRI time-series, intended for use across multiple subjects. 
 %
-
-
+%
+% Usage:
+%   outfile = get_fc(loadfilter, opts);
+%
+% Required inputs:
+%   loadfilter: character array containing path to *tsv files where each column corresponds to a 
+%               time-series for a given region of interest.
+%
+% Optional inputs passed as structured variable (i.e., opts.mergetsv = ...):
+%   mergetsv:   tab-separated file containing participant-identifying information to be merged 
+%               with the connectivity data (e.g., BIDS' participants.tsv)
+%   graphtype:  connectivity graph type, e.g., 
+%                  'upper' = upper tri., 
+%                  'lower' = lower tri., 
+%                  'full'  = full matrix
+%   trdrop:     int, number of initial TRs to drop before computing connectivity
+%   hpf:        float, high-pass filter if any (default: 0 / none)
+%   lpf:        float, low-pass filter if any (default: 0 / none)
+%   tr_ntr:     Nx2 array containing the possible TRs and number of TRs for scans
+%               to be observed; important when hpf>0 or lpf>0
+%   datakeys:   cell array containing additional participant-level data to be 
+%               output with connectivity (e.g., scanner info, software info., etc)
+%               
+% Example:
+% >>opts.lpf       =                                          .1;
+% >>opts.tr_ntr    =                    [1.395  420; 1.500  400];
+% >>opts.graphtype =                                      'full';
+% >>opts.mergetsv  = '/labs/mctfr-fmri/bids/es/participants.tsv';
+% >>opts.datakeys  = {'ManufacturersModelName',{'TrioTim','Prisma_fit'};
+%                     'SoftwareVersions',{'syngo_MR_B17','syngo_MR_D13D','syngo_MR_E11'}};
+% >>outfc_matroot  = get_fc(filefilter,opts);
+%
+% Scott Burwell, August, 2020
 
 subpfx = 'sub-'; fnpfxlen = length(subpfx); %requires, expects sub-#######
 subs = cellstr(conn_dir(loadfilter));
@@ -14,7 +46,6 @@ switch fext,
    disp('   get_fc; Sorry, the only acceptable file type at this point is *.tsv where each column is a time series from a different region of interest');
    return;
 end
-
 
 if exist('opts')&&isfield(opts,'mergetsv')&&~isempty(opts.mergetsv),
    mergetsv = opts.mergetsv; s = tdfread(mergetsv); else, mergetsv = ''; s = ''; end
@@ -144,8 +175,6 @@ for ii = 1:length(subs),
 
 end
 
-
-keyboard
 
 
 roilabels = {}; 
