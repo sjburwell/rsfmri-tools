@@ -3,10 +3,12 @@ clear
 addpath /labs/burwellstudy/apps/spm12
 run_rsfmri_tools_startup;
 
+
 pipestr = '03P+AROMANonAgg';
 atlas = '/labs/burwellstudy/data/rois/Schaefer400+HarvOxSubCortRL.nii';
 [~,atlasstr] = fileparts(atlas);
-filefilter =['/home/burwell/tempdelete/fmriprep_denoising/tmpdir/*' pipestr '_ROI-' atlasstr '*'];
+filefilter  =['/labs/burwellstudy/data/fmri/fmriprep-es2/fmriprep/denoised-3dtproject_passband-.009to9999/*' pipestr '_ROI-' atlasstr '*']
+
 
 clear opts
 opts.lpf       =                                          .1; % lowpass filter cutoff, in Hz (0 if none)

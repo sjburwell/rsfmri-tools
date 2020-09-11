@@ -201,7 +201,8 @@ T = array2table(tabledata, 'VariableNames', tablevars);
 outname_final= [ outname '_hpf' num2str(hpf) '_lpf' num2str(lpf) '_out']; 
 writetable(T,[outname_final '.dat'],'Delimiter','\t');
 
-
+%save matfile
+save([outname_final '.mat']); %,'snum','roi','roilabels','tcc',
 
 
 
