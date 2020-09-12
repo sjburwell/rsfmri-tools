@@ -1,7 +1,7 @@
 clear
 
 %% Start by having done level-1 analysis...
-addpath /labs/burwellstudy/apps/spm12
+addpath /labs/mctfr-fmri/software/spm12
 run_rsfmri_tools_startup;
 
 pipestr = '24P+aCompCor+4GSR';
@@ -73,7 +73,7 @@ edges2save = meanedges; edges2save = tril(edges2save,-1)'+tril(edges2save,-1);
 dlmwrite([outfc_matroot '_ustr-' ustr '.edge'], edges2save,'\t');
 
 % Visualize using BrainNet ( https://www.nitrc.org/projects/bnv/ )
-addpath /labs/burwellstudy/apps/BrainNetViewer_20171031/
+addpath /labs/mctfr-fmri/software/BrainNet 
 BrainNet
 
 
